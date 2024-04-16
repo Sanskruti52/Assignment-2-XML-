@@ -1,0 +1,273 @@
+Assignment 2
+Q 1) Write a script to create XML file named “Item.xml”
+AnsItem.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="item.php"?>
+<Uni>
+<Item>
+<Itemname>Grapes</Itemname>
+<Itemprice>Rs.130</Itemprice>
+<Quantity>5</Quantity>
+</Item>
+<Item>
+<Itemname>Mango</Itemname>
+<Itemprice>Rs.100</Itemprice>
+<Quantity>10</Quantity>
+</Item>
+<Item>
+<Itemname>Orange</Itemname>
+<Itemprice>Rs.200</Itemprice>
+<Quantity>15</Quantity>
+</Item>
+<Item>
+<Itemname>Strawberry</Itemname>
+<Itemprice>Rs.300</Itemprice>
+<Quantity>5</Quantity>
+</Item>
+<Item>
+<Itemname>Watermelon</Itemname>
+<Itemprice>Rs.150</Itemprice>
+<Quantity>6</Quantity>
+</Item>
+</Uni>
+Item.php (PHP File)
+<?php
+$xml=simplexml_load_file("item.xml") or die("eror:cannot create
+object");
+echo "<table border=1 align=center>";
+echo "<tr><td>Item Name</td><td>Item
+price</td><td>Quantity</td></tr>";
+foreach($xml->children() as $Item)
+{
+echo "<tr><td>".$Item->Itemname."</td>";
+echo "<td>".$Item->Itemprice."</td>";
+echo "<td>".$Item->Quantity."</td></tr>";
+}
+echo "<table>";
+?>
+2) Link “ Item. Xml” file to the CSS style sheet and get well formatted
+output as given below
+AnsXML File (item.xml)
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="item.css"?>
+<?xml-stylesheet type="text/css" href="item.php"?>
+<Uni>
+<Item>
+<Itemname>Grapes</Itemname>
+<Itemprice>Rs.130</Itemprice>
+<Quantity>5</Quantity>
+</Item>
+<Item>
+<Itemname>Mango</Itemname>
+<Itemprice>Rs.100</Itemprice>
+<Quantity>10</Quantity>
+</Item>
+<Item>
+<Itemname>Orange</Itemname>
+<Itemprice>Rs.200</Itemprice>
+<Quantity>15</Quantity>
+</Item>
+<Item>
+<Itemname>Strawberry</Itemname>
+<Itemprice>Rs.300</Itemprice>
+<Quantity>5</Quantity>
+</Item>
+<Item>
+<Itemname>Watermelon</Itemname>
+<Itemprice>Rs.150</Itemprice>
+<Quantity>6</Quantity>
+</Item>
+</Uni>
+CSS File(item.css)
+Itemname
+{
+color:black;
+font-family: copperplate Gothic Light;
+font-size: 16pt;
+font: bold;
+}
+Itemprice,Quantity
+{
+color:Red;
+font-family:arial;
+font-size: 12pt;
+font: bold;
+}
+Q 3) Write a PHP script to generate an XML file in the following format in
+PHP.
+Ans-
+As2sa3.php
+<?php
+$str=<<<XML
+<?xml version="1.0" encoding="utf-8"?>
+<BookInfo>
+<book>
+<bookno>1</bookno>
+<bookname>JAVA</bookname>
+<authorname>Balguru Swami</authorname>
+<price>250</price>
+<year>2006</year>
+</book>
+<book>
+<bookno>2</bookno>
+<bookname>C</bookname>
+<authorname>Denis Ritchie</authorname>
+<price>500</price>
+<year>1971</year>
+</book>
+</BookInfo>
+XML;
+$fname="bookstore.xml";
+$fp=fopen($fname,"w");
+fwrite($fp,$str);
+fclose($fp);
+echo"created filename is:".$fname;
+?>
+Set B
+Q 1. Write PHP script to read above created “book.xml” file into
+simpleXML object. Display attributes and elements .(Hint L
+simple_xml_load_file() function )
+Ansbook.xml
+<?xml version="1.0" encoding="utf-8"?>
+<ABCBOOK>
+<Technical>
+<BOOK>
+<Book_PubYear>2001</Book_PubYear>
+<Book_Title>Programming in C</Book_Title>
+<Book_Author>Jhon</Book_Author>
+</BOOK>
+</Technical>
+<Cooking>
+<BOOK>
+<Book_PubYear>2003</Book_PubYear>
+<Book_Title> Programming in Java</Book_Title>
+<Book_Author>Ford</Book_Author>
+</BOOK>
+</Cooking>
+<Yoga>
+<BOOK>
+<Book_PubYear>2002</Book_PubYear>
+<Book_Title>Networking</Book_Title>
+<Book_Author>Marshal</Book_Author>
+</BOOK>
+</Yoga>
+</ABCBOOK>
+book.php
+<?php
+$xml=simplexml_load_file("book.xml") or die("cannnot load");
+$xmlstring=$xml->asXML();
+echo $xmlstring;
+?>
+Q 2. Write a PHP script to read “Movie.xml” file and print all MovieTitle
+and ActorName of file using DOMDocument Parser. “Movie.xml” file
+should contain following information with at least 5 records with values.
+MovieInfo MovieNo, MovieTitle, ActorName , ReleaseYear
+AnsXML FILE:book.xml
+<?xml version='1.0' encoding ='UTF-8' ?>
+<?xml-stylesheet type="text/css"?>
+<MovieInfo>
+<Movie category="Horror">
+<Movie_no>1</Movie_no>
+<Movie_name>1920</Movie_name>
+<actor_name>Abc</actor_name>
+<year>1990</year>
+</Movie>
+<Movie category="family">
+<Movie_no>2</Movie_no>
+<Movie_name>Hum saath saath hai</Movie_name>
+<actor_name>xyz</actor_name>
+<year>1950</year>
+</Movie>
+<Movie category="friends">
+<Movie_no>3</Movie_no>
+<Movie_name>ddd</Movie_name>
+<actor_name>zzz</actor_name>
+<year>2016</year>
+</Movie>
+</MovieInfo>
+Php File:book.php
+<?php
+$doc=new DOMDocument();
+$doc->load("book.xml");
+$name=$doc->getElementsByTagName("Movie_name");
+$year=$doc->getElementsByTagName("year");
+echo "Movie Names";
+foreach($name as $val)
+{
+echo "<br>".$val->textContent;
+}
+echo "<br><br> Year";
+foreach($year as $value)
+{
+echo "<br>".$value->textContent;
+}
+?>
+Set C
+1. Create a XML file which gives details of movies available in “Movie
+CD Store “ from following categories
+a) Classical
+b) Horror
+c) Action
+AnsPHP file(Movie.php)
+<html>
+<head>
+</head>
+<body>
+<?php
+$xml=simplexml_load_file('movie.xml')or die("cannot die");
+?>
+<center>
+</b>Movie details</b>
+</center>
+<table border="1">
+<th>moviecode</th>
+<th>mname</th>
+<th>ryear</th>
+<th>aname</th>
+<?php
+foreach($xml->category as $a)
+{
+echo"<tr><td>".$a['code']."</td>";
+echo"<td>".$a->mname."</td>";
+echo"<td>".$a->ryear."</td>";
+echo"<td>".$a->aname."</td></tr>";
+}
+?>
+</table>
+</body>
+</html>
+XML File
+Movie.xml
+<?xml version="1.0" ?>
+<movieinfo>
+<category code="classical">
+<mname>Geet</mname>
+<ryear>1974</ryear>
+<aname>jitendra</aname>
+</category>
+<category code="classical">
+<mname>Anand</mname>
+<ryear>1971</ryear>
+<aname>Rajesh Khanna</aname>
+</category>
+<category code="action">
+<mname>Pushpa</mname>
+<ryear>2022</ryear>
+<aname>Allu</aname>
+</category>
+<category code="action">
+<mname>Die Hard</mname>
+<ryear>1988</ryear>
+<aname>John McTiernan</aname>
+</category>
+<category code="Horror">
+<mname>The Dark Knight</mname>
+<ryear>1999</ryear>
+<aname>Christian Bale</aname>
+</category>
+<category code="Horror">
+<mname> The Exorcist</mname>
+<ryear>1973</ryear>
+<aname>Jason Miller</aname>
+</category>
+</movieinfo>
